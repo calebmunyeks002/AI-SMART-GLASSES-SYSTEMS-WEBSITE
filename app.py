@@ -7,6 +7,7 @@ from email.mime.multipart import MIMEMultipart
 from werkzeug.security import generate_password_hash, check_password_hash
 import random
 import string
+import os
 
 # 1. INITIALIZE ENGINE
 app = Flask(__name__)
@@ -21,7 +22,10 @@ SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 SENDER_EMAIL = "your-business-email@gmail.com"  # Replace with your email address
 SENDER_PASSWORD = "your-app-password"           # Replace with your 16-character Google App Password
-DB_FILE = "database.db"
+
+# Dynamically calculates the absolute folder path where app.py lives
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DB_FILE = os.path.join(BASE_DIR, "database.db")
 
 # --- HELPER FUNCTIONS ---
 
