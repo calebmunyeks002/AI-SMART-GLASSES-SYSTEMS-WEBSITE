@@ -24,8 +24,9 @@ SENDER_EMAIL = "your-business-email@gmail.com"  # Replace with your email addres
 SENDER_PASSWORD = "your-app-password"           # Replace with your 16-character Google App Password
 
 # Dynamically calculates the absolute folder path where app.py lives
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-DB_FILE = os.path.join(BASE_DIR, "database.db")
+# New robust cloud path configuration:
+# Using the /tmp directory guarantees unrestricted write permissions on Render
+DB_FILE = "/tmp/database.db"
 
 # --- HELPER FUNCTIONS ---
 
