@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "index.html";
     }
 
-    // If a user is logged in and stumbles back onto index.html, fast-track them straight to the shop space
+    // If a user is logged in and stumbles back onto index.html, fast-track them to home
     if (currentPage.includes("index.html") && isLoggedIn === "true") {
         window.location.href = "home.html";
     }
 });
 
-// Toggle between Login and Register Forms inside index.html
+// Toggle between Login and Register Forms
 function toggleAuth(type) {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
@@ -28,22 +28,18 @@ function toggleAuth(type) {
     if (type === 'login') {
         loginForm.style.display = 'block';
         registerForm.style.display = 'none';
-        tabs[0].style.color = '#333';
-        tabs[0].style.borderBottom = '2px solid #6200ee';
-        tabs[1].style.color = '#888';
-        tabs[1].style.borderBottom = 'none';
+        tabs[0].classList.add('active');
+        tabs[1].classList.remove('active');
     } else {
         loginForm.style.display = 'none';
         registerForm.style.display = 'block';
-        tabs[0].style.color = '#888';
-        tabs[0].style.borderBottom = 'none';
-        tabs[1].style.color = '#333';
-        tabs[1].style.borderBottom = '2px solid #03dac6';
+        tabs[0].classList.remove('active');
+        tabs[1].classList.add('active');
     }
 }
 
 /* ==========================================
-   AUTHENTICATION TRANSLATION STREAM
+   AUTHENTICATION STREAM
    ========================================== */
 
 async function handleRegister(event) {
@@ -59,21 +55,19 @@ async function handleRegister(event) {
             body: JSON.stringify({ name, email, password })
         });
         
-        // Safe catch parsing block if server drops raw html error traces
         const result = await response.json().catch(() => ({}));
         
         if (response.ok) {
-            alert("🎉 Account created successfully! Redirecting you to the login tab...");
+            alert("🎉 Account created successfully! Please log in.");
             event.target.reset();
             toggleAuth('login');
             document.getElementById("loginEmail").value = email;
         } else {
-            const errorMsg = result.message || "The cloud database is currently initializing or resetting. Please try clicking submit once more.";
-            alert("❌ Registration Failed: " + errorMsg);
+            alert("❌ Registration Failed: " + (result.message || "Unknown server error."));
         }
     } catch (error) {
-        console.error("Network Routing Interrupt Error:", error);
-        alert("❌ Connection Fail: Could not hit the live backend API gateway cloud pipeline.");
+        console.error("Fetch Error:", error);
+        alert("❌ Connection Fail: Could not reach the cloud server.");
     }
 }
 
@@ -94,27 +88,25 @@ async function handleLogin(event) {
         if (response.ok) {
             sessionStorage.setItem("isLoggedIn", "true");
             sessionStorage.setItem("userEmail", email);
-            window.location.href = "home.html"; // FORCE REDIRECT TO HOME PAGE
+            window.location.href = "home.html";
         } else {
-            const errorMsg = result.message || "Invalid credentials sequence mismatch verified.";
-            alert("❌ Login Failed: " + errorMsg);
+            alert("❌ Login Failed: " + (result.message || "Invalid credentials."));
         }
     } catch (error) {
-        console.error("Network Routing Interrupt Error:", error);
-        alert("❌ Connection Fail: Cloud server timeout. Please give Render 60 seconds to completely wake up free-tier processes.");
+        console.error("Fetch Error:", error);
+        alert("❌ Connection Fail: Cloud server timeout.");
     }
 }
 
 function handleLogout(event) {
     event.preventDefault();
-    sessionStorage.removeItem("isLoggedIn");
-    sessionStorage.removeItem("userEmail");
-    alert("👋 Logged out successfully. See you next time!");
-    window.location.href = "index.html"; // BOUNCE BACK TO ENTRANCE
+    sessionStorage.clear();
+    alert("👋 Logged out successfully.");
+    window.location.href = "index.html";
 }
 
 /* ==========================================
-   CHECKOUT & COMMERCE TRACKING
+   CHECKOUT & COMMERCE
    ========================================== */
 
 function openCheckout() {
@@ -124,64 +116,52 @@ function openCheckout() {
 
 function closeCheckout() {
     document.getElementById('checkoutModal').style.display = 'none';
-    document.getElementById('checkoutForm').reset();
 }
 
 function calculateTotal() {
     const basePrice = parseFloat(document.getElementById('basePrice').getAttribute('data-price'));
     const quantity = parseInt(document.getElementById('quantity').value) || 1;
-    const totalInput = document.getElementById('totalAmount');
-    
-    const total = basePrice * quantity;
-    totalInput.value = `$${total.toFixed(2)}`;
+    document.getElementById('totalAmount').value = `$${(basePrice * quantity).toFixed(2)}`;
 }
 
 async function handleCheckoutSubmit(event) {
     event.preventDefault();
 
-    const userEmail = sessionStorage.getItem("userEmail");
-    const quantity = document.getElementById('quantity').value;
-    const color = document.getElementById('color').value;
-    const location = document.getElementById('location').value;
-    const mpesaCode = document.getElementById('M-pesaCode').value.toUpperCase().trim(); 
-    const totalAmount = document.getElementById('totalAmount').value;
+    const payload = {
+        email: sessionStorage.getItem("userEmail"),
+        quantity: parseInt(document.getElementById('quantity').value),
+        color: document.getElementById('color').value,
+        location: document.getElementById('location').value,
+        mpesa_code: document.getElementById('M-pesaCode').value.toUpperCase().trim(),
+        total_amount: document.getElementById('totalAmount').value
+    };
 
     try {
         const response = await fetch(`${BACKEND_URL}/purchase`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                product_id: 1, 
-                email: userEmail,
-                quantity: parseInt(quantity),
-                color: color,
-                location: location,
-                mpesa_code: mpesaCode,
-                total_amount: totalAmount
-            })
+            body: JSON.stringify(payload)
         });
 
         const result = await response.json().catch(() => ({}));
         
         if (response.ok) {
-            alert(`🛒 Order Sent Successfully!\n\nDetails:\n- Total: ${totalAmount}\n- M-Pesa Code: ${mpesaCode}\n- Destination: ${location}\n\n📬 Check your inbox! A confirmation receipt has been sent to ${userEmail}.`);
+            alert("🛒 Order Sent Successfully! Check your inbox.");
             closeCheckout();
         } else {
-            alert("❌ Server Error: " + (result.message || "Could not complete registration logging parameters."));
+            alert("❌ Server Error: " + (result.message || "Failed to process order."));
         }
     } catch (error) {
-        alert(`🛒 Order Saved Locally!\n\nTotal Due: ${totalAmount}\nM-Pesa Code: ${mpesaCode}\nYour delivery target is: ${location}\nExpect your parcel in 2-4 working days.\n\n(Note: Backend server offline. Email receipt could not be processed right now.)`);
-        closeCheckout();
+        alert("❌ Connection Error: Backend server currently unreachable.");
     }
 }
 
-// Utility features for UI
 function celebrate() {
-    alert("🚀 Welcome to the Innovation Hub! Let's deploy technology to address community challenges.");
+    alert("🚀 Welcome to the Innovation Hub!");
 }
 
 function handleFormSubmit(event) {
     event.preventDefault();
-    alert("✨ Thank you for reaching out! Your message has been sent successfully.");
+    alert("✨ Message sent successfully!");
     document.getElementById("contactForm").reset();
 }
