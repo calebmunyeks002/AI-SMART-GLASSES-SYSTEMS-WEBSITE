@@ -1,0 +1,421 @@
+/* Global Reset & Smooth Scroll */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+/* Dynamic Colors */
+:root {
+    --primary-color: #6a1b9a; /* Deep Purple */
+    --accent-color: #ff9100;  /* Vibrant Orange */
+    --bg-light: #f8f9fa;
+    --text-dark: #333;
+}
+
+/* Header & Navbar */
+header {
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+.logo span {
+    color: var(--primary-color);
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center; /* Keeps button aligned with links */
+    gap: 20px;
+}
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 600;
+    transition: color 0.3s;
+}
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+/* Special styling for Navbar Auth Button */
+.auth-btn {
+    background-color: var(--primary-color);
+    color: white !important; /* Forces text to stay white */
+    padding: 8px 18px;
+    border-radius: 20px;
+    transition: background-color 0.3s, transform 0.2s !important;
+}
+.auth-btn:hover {
+    background-color: #4a148c;
+    transform: translateY(-2px);
+}
+
+/* Hero Section with Vibrant Background */
+.hero {
+    background: linear-gradient(135deg, #6a1b9a 0%, #a83279 100%);
+    color: white;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+.highlight {
+    color: var(--accent-color);
+}
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    opacity: 0.9;
+}
+.cta-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+.cta-btn:hover {
+    transform: scale(1.05);
+    background-color: #e68200;
+}
+
+/* Features Grid with Animation on Hover */
+.features {
+    padding: 80px 20px;
+    background-color: var(--bg-light);
+    text-align: center;
+}
+.features h2 {
+    margin-bottom: 40px;
+    font-size: 2.2rem;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.card {
+    background: white;
+    padding: 40px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(106, 27, 154, 0.15);
+}
+.card h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+/* Shop Section Styling */
+.shop-section {
+    padding: 80px 20px;
+    background-color: #ffffff;
+    text-align: center;
+}
+.shop-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+.section-subtitle {
+    color: #666;
+    margin-bottom: 40px;
+}
+.product-container {
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.product-card {
+    background: white;
+    max-width: 450px;
+    border-radius: 15px;
+    overflow: hidden; /* Ensures image corners match card radius */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    position: relative;
+    transition: transform 0.3s;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+}
+.product-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 5px 12px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    border-radius: 20px;
+}
+.product-image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+.product-details {
+    padding: 30px 25px;
+    text-align: left;
+}
+.product-details h3 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+.product-description {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+.product-price {
+    margin-bottom: 20px;
+}
+.price {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+.buy-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.buy-btn:hover {
+    background-color: #e68200;
+}
+
+/* Authentication Section (Optimized for standalone index.html layout) */
+.auth-section {
+    padding: 40px 20px;
+    background-color: var(--bg-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.auth-container {
+    background: white;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+.auth-tabs {
+    display: flex;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 30px;
+}
+.tab-link {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s, border-color 0.3s;
+}
+.tab-link.active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    margin-bottom: -2px; /* Smooth overlay over container border */
+}
+.auth-container h3 {
+    margin-bottom: 20px;
+    color: var(--text-dark);
+    text-align: center;
+}
+.auth-submit-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    width: 100%; /* Ensures full box dimension alignment */
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s, transform 0.1s;
+}
+.auth-submit-btn:hover {
+    background-color: #4a148c;
+}
+.auth-submit-btn:active {
+    transform: scale(0.98);
+}
+
+/* Contact Form Layout */
+.contact {
+    padding: 80px 20px;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.contact h2 { margin-bottom: 15px; }
+.contact p { margin-bottom: 30px; color: #666; }
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+input, textarea, select {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+/* Enhanced dynamic focus glow ring */
+input:focus, textarea:focus, select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.15);
+}
+
+.submit-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.submit-btn:hover {
+    background-color: #4a148c;
+}
+
+/* Footer styling */
+footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+}
+
+/* Checkout Modal Design styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; 
+    z-index: 2000; /* Stays on top of navigation bars */
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.5); /* Dimmed background layer */
+    overflow: auto;
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto; 
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    position: relative;
+    text-align: left;
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: var(--text-dark);
+}
+
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.payment-instruction {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    border-left: 4px solid #4caf50;
+}
+
+.modal-content label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 10px;
+    display: block;
+    text-align: left;
+}
+
+/* Make total amount input look distinctly like a locked field */
+#totalAmount {
+    background-color: #eee;
+    font-weight: bold;
+    color: var(--primary-color);
+    cursor: not-allowed;
+}
