@@ -122,6 +122,12 @@ def init_db():
 
 @app.route('/api/register', methods=['POST'])
 def register():
+    # 1. Force database initialization to run immediately to ensure tables exist
+    try:
+        init_db()
+    except Exception as db_err:
+        return jsonify({"status": "error", "message": f"Database structural build failed: {str(db_err)}"}), 500
+
     data = request.json or {}
     full_name = str(data.get('name') or data.get('full_name') or "").strip()
     email = str(data.get('email') or "").strip().lower()
@@ -144,7 +150,9 @@ def register():
         return jsonify({"status": "success", "message": "Account created successfully!"}), 201
     except sqlite3.IntegrityError:
         return jsonify({"status": "error", "message": "This email address is already registered."}), 400
-
+    except Exception as general_err:
+        # 2. ✅ CRUCIAL: Capture and stream back the exact internal Python crash trace
+        return jsonify({"status": "error", "message": f"Internal Database Write Error: {str(general_err)}"}), 500
 
 @app.route('/api/login', methods=['POST'])
 def login():
