@@ -1,4 +1,6 @@
-const BACKEND_URL = "https://smart-glasses-backend.onrender.com/api"; // Run immediately when any page loads to handle routing rules securely
+const BACKEND_URL = "https://smart-glasses-backend.onrender.com/api"; 
+
+// Run immediately when any page loads to handle routing rules securely
 document.addEventListener("DOMContentLoaded", () => {
     const currentPage = window.location.pathname;
     const isLoggedIn = sessionStorage.getItem("isLoggedIn");
@@ -46,8 +48,8 @@ function toggleAuth(type) {
 
 async function handleRegister(event) {
     event.preventDefault();
-    const name = document.getElementById("registerName").value;
-    const email = document.getElementById("registerEmail").value;
+    const name = document.getElementById("registerName").value.trim();
+    const email = document.getElementById("registerEmail").value.trim();
     const password = document.getElementById("registerPassword").value;
 
     try {
@@ -56,7 +58,9 @@ async function handleRegister(event) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, password })
         });
-        const result = await response.json();
+        
+        // Safe catch parsing block if server drops raw html error traces
+        const result = await response.json().catch(() => ({}));
         
         if (response.ok) {
             alert("🎉 Account created successfully! Redirecting you to the login tab...");
@@ -64,18 +68,18 @@ async function handleRegister(event) {
             toggleAuth('login');
             document.getElementById("loginEmail").value = email;
         } else {
-            alert("❌ Registration Failed: " + result.message);
+            const errorMsg = result.message || "The cloud database is currently initializing or resetting. Please try clicking submit once more.";
+            alert("❌ Registration Failed: " + errorMsg);
         }
     } catch (error) {
-        alert("🎉 (Local Test Mode) Registration Successful! Switching to Login panel.");
-        toggleAuth('login');
-        document.getElementById("loginEmail").value = email;
+        console.error("Network Routing Interrupt Error:", error);
+        alert("❌ Connection Fail: Could not hit the live backend API gateway cloud pipeline.");
     }
 }
 
 async function handleLogin(event) {
     event.preventDefault();
-    const email = document.getElementById("loginEmail").value;
+    const email = document.getElementById("loginEmail").value.trim();
     const password = document.getElementById("loginPassword").value;
 
     try {
@@ -84,20 +88,20 @@ async function handleLogin(event) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
         });
-        const result = await response.json();
+        
+        const result = await response.json().catch(() => ({}));
         
         if (response.ok) {
             sessionStorage.setItem("isLoggedIn", "true");
             sessionStorage.setItem("userEmail", email);
             window.location.href = "home.html"; // FORCE REDIRECT TO HOME PAGE
         } else {
-            alert("❌ Login Failed: " + result.message);
+            const errorMsg = result.message || "Invalid credentials sequence mismatch verified.";
+            alert("❌ Login Failed: " + errorMsg);
         }
     } catch (error) {
-        alert("🔐 (Local Test Mode) Login Successful! Accessing dashboard...");
-        sessionStorage.setItem("isLoggedIn", "true");
-        sessionStorage.setItem("userEmail", email);
-        window.location.href = "home.html"; // FORCE REDIRECT TO HOME PAGE
+        console.error("Network Routing Interrupt Error:", error);
+        alert("❌ Connection Fail: Cloud server timeout. Please give Render 60 seconds to completely wake up free-tier processes.");
     }
 }
 
@@ -157,13 +161,13 @@ async function handleCheckoutSubmit(event) {
             })
         });
 
-        const result = await response.json();
+        const result = await response.json().catch(() => ({}));
         
         if (response.ok) {
             alert(`🛒 Order Sent Successfully!\n\nDetails:\n- Total: ${totalAmount}\n- M-Pesa Code: ${mpesaCode}\n- Destination: ${location}\n\n📬 Check your inbox! A confirmation receipt has been sent to ${userEmail}.`);
             closeCheckout();
         } else {
-            alert("❌ Server Error: " + result.message);
+            alert("❌ Server Error: " + (result.message || "Could not complete registration logging parameters."));
         }
     } catch (error) {
         alert(`🛒 Order Saved Locally!\n\nTotal Due: ${totalAmount}\nM-Pesa Code: ${mpesaCode}\nYour delivery target is: ${location}\nExpect your parcel in 2-4 working days.\n\n(Note: Backend server offline. Email receipt could not be processed right now.)`);
