@@ -1,5 +1,5 @@
-const BACKEND_URL = "https://smart-glasses-backend.onrender.com/api"; 
-
+// Change this line in script.js to match your actual Render URL
+const BACKEND_URL = "https://ai-smart-glasses-systems-website.onrender.com/api";
 // Run immediately when any page loads to handle routing rules securely
 document.addEventListener("DOMContentLoaded", () => {
     const currentPage = window.location.pathname;
