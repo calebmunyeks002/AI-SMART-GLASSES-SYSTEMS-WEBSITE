@@ -1,5 +1,4 @@
-const BACKEND_URL = "http://127.0.0.1:5000/api";
-
+const BACKEND_URL = "https://smart-glasses-backend.onrender.com";
 // Run immediately when any page loads to handle routing rules securely
 document.addEventListener("DOMContentLoaded", () => {
     const currentPage = window.location.pathname;
