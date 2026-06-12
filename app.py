@@ -279,5 +279,11 @@ def clear_test_accounts():
     
 if __name__ == '__main__':
     init_db()
-    print("🚀 Server Running flawlessly on http://127.0.0.1:5000")
-    app.run(debug=True, port=5000)
+    
+    # ✅ Tell Flask to accept the dynamic port assigned by Render's environment
+    # If it runs locally on your computer, it defaults back to 5000 automatically
+    port = int(os.environ.get("PORT", 5000))
+    
+    # ✅ Bind to 0.0.0.0 so external cloud traffic can reach your app endpoints
+    # Turn off debug mode for production security
+    app.run(host="0.0.0.0", port=port, debug=False)
