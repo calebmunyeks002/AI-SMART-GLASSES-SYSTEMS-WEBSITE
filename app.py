@@ -85,24 +85,29 @@ def init_db():
 
 @app.route('/api/register', methods=['POST'])
 def register():
-    init_db()
-    data = request.json or {}
-    full_name = str(data.get('name') or "").strip()
-    email = str(data.get('email') or "").strip().lower()
-    password = str(data.get('password') or "")
-
-    if not full_name or not email or not password:
-        return jsonify({"status": "error", "message": "All fields required"}), 400
-
     try:
+        init_db()
+        data = request.json
+        if not data:
+            return jsonify({"status": "error", "message": "No data received"}), 400
+            
+        full_name = data.get('name')
+        email = data.get('email')
+        password = data.get('password')
+
         with sqlite3.connect(DB_FILE) as conn:
-            conn.cursor().execute("INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)", 
-                                (full_name, email, generate_password_hash(password)))
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)", 
+                           (full_name, email, generate_password_hash(password)))
             conn.commit()
         return jsonify({"status": "success", "message": "Account created!"}), 201
-    except sqlite3.IntegrityError:
-        return jsonify({"status": "error", "message": "Email already registered."}), 400
-
+        
+    except Exception as e:
+        # This print statement is the KEY. 
+        # It sends the real error to your Render 'Logs' tab.
+        print(f"CRITICAL ERROR IN REGISTER: {str(e)}") 
+        return jsonify({"status": "error", "message": str(e)}), 500
+        
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.json or {}
