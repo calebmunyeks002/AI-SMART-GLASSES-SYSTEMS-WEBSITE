@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://smart-glasses-backend.onrender.com/api" // Run immediately when any page loads to handle routing rules securely
+const BACKEND_URL = "https://smart-glasses-backend.onrender.com/api"; // Run immediately when any page loads to handle routing rules securely
 document.addEventListener("DOMContentLoaded", () => {
     const currentPage = window.location.pathname;
     const isLoggedIn = sessionStorage.getItem("isLoggedIn");
