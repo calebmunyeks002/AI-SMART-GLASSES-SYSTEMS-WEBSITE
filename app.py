@@ -133,6 +133,9 @@ def purchase():
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
+@app.route('/')
+def home():
+    return "Backend API is online and active. Please use the /api/register or /api/login endpoints."
 
 if __name__ == '__main__':
     init_db()
