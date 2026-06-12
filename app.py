@@ -10,7 +10,11 @@ import string
 
 # 1. INITIALIZE ENGINE
 app = Flask(__name__)
-CORS(app) 
+CORS(app, resources={r"/api/*": {"origins": [
+    "http://127.0.0.1:5500", 
+    "http://localhost:5500", 
+    "https://calebmunyeks002.github.io"
+]}}) 
 
 # 2. APPLICATION CONFIGURATIONS
 SMTP_SERVER = "smtp.gmail.com"
