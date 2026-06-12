@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - AI Smart Systems</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: #f5f5f7; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: sans-serif;">
+
+    <section id="auth" class="auth-section" style="margin: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 12px; background: #ffffff; padding: 20px; width: 100%; max-width: 450px;">
+        <div class="auth-container">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h1 style="color: #333; font-size: 24px; margin-bottom: 5px;">AI Smart Systems</h1>
+                <p style="color: #666; font-size: 14px;">Please login or register to access the hub.</p>
+            </div>
+
+            <div class="auth-tabs" style="display: flex; margin-bottom: 25px; border-bottom: 2px solid #eee;">
+                <button class="tab-link active" onclick="toggleAuth('login')" style="flex: 1; padding: 12px; background: none; border: none; font-size: 16px; font-weight: bold; cursor: pointer;">Login</button>
+                <button class="tab-link" onclick="toggleAuth('register')" style="flex: 1; padding: 12px; background: none; border: none; font-size: 16px; font-weight: bold; cursor: pointer; color: #888;">Register</button>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <h3 style="margin-bottom: 15px; color: #444;">Welcome Back</h3>
+                <input type="email" id="loginEmail" placeholder="Email Address" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+                <input type="password" id="loginPassword" placeholder="Password" required style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+                <button type="submit" class="auth-submit-btn" style="width: 100%; padding: 12px; background: #6200ee; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;">Sign In</button>
+            </form>
+
+            <form id="registerForm" onsubmit="handleRegister(event)" style="display: none;">
+                <h3 style="margin-bottom: 15px; color: #444;">Create Account</h3>
+                <input type="text" id="registerName" placeholder="Full Name" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+                <input type="email" id="registerEmail" placeholder="Email Address" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+                <input type="password" id="registerPassword" placeholder="Create Password" required style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+                <button type="submit" class="auth-submit-btn" style="width: 100%; padding: 12px; background: #03dac6; color: #000; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;">Register</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lively & Modern Web Space</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">AI Smart<span> Systems</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#shop">Shop Glasses</a></li> 
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#" class="auth-btn" onclick="handleLogout(event)" style="background-color: #d32f2f;">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Innovating for a Better <span class="highlight">Tomorrow</span></h1>
+            <p>Using data analytics, artificial intelligence, and smart technologies to solve real-world challenges.</p>
+            <button class="cta-btn" onclick="celebrate()">Explore Our Work</button>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <h2>What We Focus On</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Artificial Intelligence</h3>
+                <p>Building intelligent automation and real-time assistive systems to empower communities.</p>
+            </div>
+            <div class="card">
+                <h3>Data Analytics</h3>
+                <p>Transforming complex information into actionable data driven insights.</p>
+            </div>
+            <div class="card">
+                <h3>Smart Systems</h3>
+                <p>Developing hardware and software integrations for impactful technology solutions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop" class="shop-section">
+        <h2>Experience the Future</h2>
+        <p class="section-subtitle">Get your hands on our flagship Smart Glasses today.</p>
+        
+        <div class="product-container">
+            <div class="product-card">
+                <div class="product-badge">Best Seller</div>
+                <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=500&q=80" alt="Smart Glasses" class="product-image">
+                <div class="product-details">
+                    <h3>Munyeks Pro AI Smart Glasses For Visually Impaired</h3>
+                    <p class="product-description">Heads-up AR display, real-time AI translation, and built-in voice command assistant. Sleek, lightweight, and powerful.</p>
+                    <div class="product-price">
+                        <span class="price" id="basePrice" data-price="150.00">$150.00</span>
+                    </div>
+                    <button class="buy-btn" onclick="openCheckout()">Purchase Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeCheckout()">&times;</span>
+            <h2>Complete Your Purchase</h2>
+            <p class="payment-instruction">Please send your mobile payment to M-Pesa: <strong>0729370661</strong></p>
+            
+            <form id="checkoutForm" onsubmit="handleCheckoutSubmit(event)">
+                <label for="quantity">Number of Items:</label>
+                <input type="number" id="quantity" min="1" value="1" oninput="calculateTotal()" required>
+
+                <label for="color">Choose Color:</label>
+                <select id="color" required>
+                    <option value="Matte Black">Matte Black</option>
+                    <option value="Cyber Silver">Cyber Silver</option>
+                    <option value="Future White">Future White</option>
+                </select>
+
+                <label for="location">Current Delivery Location:</label>
+                <input type="text" id="location" placeholder="Street, City, Postal Code" required>
+
+                <label for="M-pesaCode">M-Pesa Confirmation Code:</label>
+                <input type="text" id="M-pesaCode" placeholder="Confirmation Code" required style="text-transform: uppercase;">
+
+                <label for="totalAmount">Total Amount (USD):</label>
+                <input type="text" id="totalAmount" value="$150.00" readonly>
+
+                <button type="submit" class="submit-btn">Confirm Payment & Order</button>
+            </form>
+        </div>
+    </div>
+
+    <section id="contact" class="contact">
+        <h2>Get In Touch</h2>
+        <p>Have an initiative, idea, or project you'd like to collaborate on? Let's connect.</p>
+        <form id="contactForm" onsubmit="handleFormSubmit(event)">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Innovation Hub. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
