@@ -94,7 +94,7 @@ async function handleLogin(event) {
         }
     } catch (error) {
         console.error("Fetch Error:", error);
-        alert("❌ Connection Fail: Cloud server timeout.");
+        alert("❌ Connection Fail: Server request timeout.");
     }
 }
 
@@ -157,7 +157,8 @@ async function handleCheckoutSubmit(event) {
 }
 
 function celebrate() {
-    alert("🚀 Welcome to the Innovation Hub!");
+    alert("🚀 Welcome to the AI Smart Systems Innovation Hub!");
+    window.location.href = "home.html;
 }
 
 function handleFormSubmit(event) {
