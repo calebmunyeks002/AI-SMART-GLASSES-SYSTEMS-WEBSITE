@@ -158,7 +158,7 @@ async function handleCheckoutSubmit(event) {
 
 function celebrate() {
     alert("🚀 Welcome to the AI Smart Systems Innovation Hub!");
-    window.location.href = "home.html;
+    window.location.features
 }
 
 function handleFormSubmit(event) {
